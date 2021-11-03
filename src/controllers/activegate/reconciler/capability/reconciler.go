@@ -88,7 +88,7 @@ func setCommunicationsPort(dk *dynatracev1beta1.DynaKube) events.StatefulSetEven
 			}
 			// TODO How to report an error?
 		}
-		if dk.FeatureEnableStatsDIngest() {
+		if dk.NeedsStatsD() {
 			statsdContainer, err := getContainerByName(sts.Spec.Template.Spec.Containers, consts.StatsDContainerName)
 			if err == nil {
 				statsdContainer.Ports = []corev1.ContainerPort{

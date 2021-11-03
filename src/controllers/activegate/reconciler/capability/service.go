@@ -15,7 +15,7 @@ import (
 const AnnotationEnableStatsD = dynatracev1beta1.InternalFlagPrefix + "enable-statsd"
 
 func createService(instance *dynatracev1beta1.DynaKube, feature string) *corev1.Service {
-	enableStatsD := instance.FeatureEnableStatsDIngest()
+	enableStatsD := instance.NeedsStatsD()
 	ports := []corev1.ServicePort{
 		{
 			Name:       consts.HttpsServicePortName,

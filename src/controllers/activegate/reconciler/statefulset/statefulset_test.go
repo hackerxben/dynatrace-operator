@@ -97,10 +97,10 @@ func TestStatefulSet_TemplateSpec(t *testing.T) {
 		corev1.NodeSelectorTerm{MatchExpressions: kubeobjects.AffinityNodeRequirement()})
 
 	assert.Equal(t, capabilityProperties.Tolerations, templateSpec.Tolerations)
-	assert.Equalf(t, instance.FeatureEnableStatsDIngest(), len(templateSpec.Volumes) > 0,
+	assert.Equalf(t, instance.NeedsStatsD(), len(templateSpec.Volumes) > 0,
 		"Expected that there are no volumes iff StatsD is disabled",
 	)
-	assert.Equalf(t, instance.FeatureEnableStatsDIngest(), volumeIsDefined(templateSpec.Volumes, "auth-tokens"),
+	assert.Equalf(t, instance.NeedsStatsD(), volumeIsDefined(templateSpec.Volumes, "auth-tokens"),
 		"Expected that volume mount %s has a predefined pod volume", "auth-tokens",
 	)
 	assert.NotEmpty(t, templateSpec.ImagePullSecrets)
@@ -122,10 +122,10 @@ func TestStatefulSet_Container(t *testing.T) {
 	assert.Equal(t, corev1.PullAlways, activeGateContainer.ImagePullPolicy)
 	assert.NotEmpty(t, activeGateContainer.Env)
 	assert.Empty(t, activeGateContainer.Args)
-	assert.Equalf(t, instance.FeatureEnableStatsDIngest(), len(activeGateContainer.VolumeMounts) > 0,
+	assert.Equalf(t, instance.NeedsStatsD(), len(activeGateContainer.VolumeMounts) > 0,
 		"Expected that there are no volume mounts iff StatsD is disabled",
 	)
-	assert.Equalf(t, instance.FeatureEnableStatsDIngest(), mountPathIsIn(activeGateContainer.VolumeMounts, "/var/lib/dynatrace/gateway/config"),
+	assert.Equalf(t, instance.NeedsStatsD(), mountPathIsIn(activeGateContainer.VolumeMounts, "/var/lib/dynatrace/gateway/config"),
 		"Expected that ActiveGate container defines mount point %s if and only if StatsD ingest is enabled", "/var/lib/dynatrace/gateway/config",
 	)
 	assert.NotNil(t, activeGateContainer.ReadinessProbe)

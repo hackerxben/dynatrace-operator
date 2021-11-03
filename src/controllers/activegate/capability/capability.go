@@ -26,9 +26,10 @@ const (
 type baseFunc func() *capabilityBase
 
 var activeGateCapabilities = map[dynatracev1beta1.CapabilityDisplayName]baseFunc{
-	dynatracev1beta1.KubeMonCapability.DisplayName:    kubeMonBase,
-	dynatracev1beta1.RoutingCapability.DisplayName:    routingBase,
-	dynatracev1beta1.DataIngestCapability.DisplayName: dataIngestBase,
+	dynatracev1beta1.KubeMonCapability.DisplayName:      kubeMonBase,
+	dynatracev1beta1.RoutingCapability.DisplayName:      routingBase,
+	dynatracev1beta1.DataIngestCapability.DisplayName:   dataIngestBase,
+	dynatracev1beta1.StatsDIngestCapability.DisplayName: statsDIngestBase,
 }
 
 type Configuration struct {
@@ -269,6 +270,20 @@ func dataIngestBase() *capabilityBase {
 	c := capabilityBase{
 		shortName: dynatracev1beta1.DataIngestCapability.ShortName,
 		argName:   dynatracev1beta1.DataIngestCapability.ArgumentName,
+		Configuration: Configuration{
+			SetDnsEntryPoint:     true,
+			SetReadinessPort:     true,
+			SetCommunicationPort: true,
+			CreateService:        true,
+		},
+	}
+	return &c
+}
+
+func statsDIngestBase() *capabilityBase {
+	c := capabilityBase{
+		shortName: dynatracev1beta1.StatsDIngestCapability.ShortName,
+		argName:   dynatracev1beta1.StatsDIngestCapability.ArgumentName,
 		Configuration: Configuration{
 			SetDnsEntryPoint:     true,
 			SetReadinessPort:     true,

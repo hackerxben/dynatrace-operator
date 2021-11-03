@@ -22,7 +22,7 @@ var (
 	RoutingCapability = ActiveGateCapability{
 		DisplayName:  "routing",
 		ShortName:    "routing",
-		ArgumentName: "MSGrouter,extension_controller",
+		ArgumentName: "MSGrouter",
 	}
 
 	KubeMonCapability = ActiveGateCapability{
@@ -36,12 +36,19 @@ var (
 		ShortName:    "data-ingest",
 		ArgumentName: "metrics_ingest",
 	}
+
+	StatsDIngestCapability = ActiveGateCapability{
+		DisplayName:  "statsd-ingest",
+		ShortName:    "statsd-ingest",
+		ArgumentName: "extension_controller",
+	}
 )
 
 var ActiveGateDisplayNames = map[CapabilityDisplayName]bool{
-	RoutingCapability.DisplayName:    true,
-	KubeMonCapability.DisplayName:    true,
-	DataIngestCapability.DisplayName: true,
+	RoutingCapability.DisplayName:      true,
+	KubeMonCapability.DisplayName:      true,
+	DataIngestCapability.DisplayName:   true,
+	StatsDIngestCapability.DisplayName: true,
 }
 
 type ActiveGateSpec struct {

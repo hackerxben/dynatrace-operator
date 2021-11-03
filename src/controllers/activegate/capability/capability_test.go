@@ -379,6 +379,35 @@ func TestNewMultiCapability(t *testing.T) {
 			},
 		},
 		{
+			name: "just statsd-ingest",
+			args: args{
+				dynakube: &dynatracev1beta1.DynaKube{
+					Spec: dynatracev1beta1.DynaKubeSpec{
+						ActiveGate: dynatracev1beta1.ActiveGateSpec{
+							Capabilities: []dynatracev1beta1.CapabilityDisplayName{
+								dynatracev1beta1.StatsDIngestCapability.DisplayName,
+							},
+						},
+					},
+				},
+			},
+			want: &MultiCapability{
+				capabilityBase: capabilityBase{
+					enabled:    true,
+					shortName:  MultiActiveGateName,
+					argName:    dynatracev1beta1.StatsDIngestCapability.ArgumentName,
+					properties: props,
+					Configuration: Configuration{
+						SetDnsEntryPoint:     true,
+						SetReadinessPort:     true,
+						SetCommunicationPort: true,
+						CreateService:        true,
+						ServiceAccountOwner:  "",
+					},
+				},
+			},
+		},
+		{
 			name: "just kubemon",
 			args: args{
 				dynakube: &dynatracev1beta1.DynaKube{
@@ -440,6 +469,7 @@ func TestNewMultiCapability(t *testing.T) {
 							Capabilities: []dynatracev1beta1.CapabilityDisplayName{
 								dynatracev1beta1.KubeMonCapability.DisplayName,
 								dynatracev1beta1.DataIngestCapability.DisplayName,
+								dynatracev1beta1.StatsDIngestCapability.DisplayName,
 								dynatracev1beta1.RoutingCapability.DisplayName,
 							},
 						},
@@ -448,9 +478,14 @@ func TestNewMultiCapability(t *testing.T) {
 			},
 			want: &MultiCapability{
 				capabilityBase: capabilityBase{
-					enabled:    true,
-					shortName:  MultiActiveGateName,
-					argName:    strings.Join([]string{dynatracev1beta1.KubeMonCapability.ArgumentName, dynatracev1beta1.DataIngestCapability.ArgumentName, dynatracev1beta1.RoutingCapability.ArgumentName}, ","),
+					enabled:   true,
+					shortName: MultiActiveGateName,
+					argName: strings.Join([]string{
+						dynatracev1beta1.KubeMonCapability.ArgumentName,
+						dynatracev1beta1.DataIngestCapability.ArgumentName,
+						dynatracev1beta1.StatsDIngestCapability.ArgumentName,
+						dynatracev1beta1.RoutingCapability.ArgumentName,
+					}, ","),
 					properties: props,
 					Configuration: Configuration{
 						SetDnsEntryPoint:     true,
