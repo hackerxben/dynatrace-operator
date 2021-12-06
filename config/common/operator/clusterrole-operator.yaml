@@ -36,6 +36,7 @@ rules:
     resourceNames:
       - dynatrace-dynakube-config
       - dynatrace-data-ingest-endpoint
+      - dynatrace-activegate-internal-proxy
     verbs:
       - get
       - update

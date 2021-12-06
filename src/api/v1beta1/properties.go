@@ -77,6 +77,10 @@ func (dk *DynaKube) IsActiveGateMode(mode string) bool {
 	return false
 }
 
+func (dk *DynaKube) IsProxyNilOrEmpty() bool {
+	return dk.Spec.Proxy == nil || (dk.Spec.Proxy.Value == "" && dk.Spec.Proxy.ValueFrom == "")
+}
+
 // ShouldAutoUpdateOneAgent returns true if the Operator should update OneAgent instances automatically.
 func (dk *DynaKube) ShouldAutoUpdateOneAgent() bool {
 	if dk.CloudNativeFullstackMode() {
