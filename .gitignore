@@ -85,3 +85,4 @@ config/deploy/kustomization.yaml
 /.run/
 
 kubeconfig
+kind-logs-*
