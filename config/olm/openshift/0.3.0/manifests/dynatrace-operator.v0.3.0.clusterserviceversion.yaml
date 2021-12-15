@@ -1045,8 +1045,9 @@ spec:
           - create
         serviceAccountName: dynatrace-operator
       - rules:
-        serviceAccountName: dyntrace-rounting
-      - rul
+        serviceAccountName: dyntrace-routing
+      - rules:
+        serviceAccountName: dynatrace-activegate
       - rules:
         - apiGroups:
           - ""
