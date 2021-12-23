@@ -124,7 +124,7 @@ func (g *EndpointSecretGenerator) PrepareFields(ctx context.Context, dk *dynatra
 }
 
 func dataIngestUrl(dk *dynatracev1beta1.DynaKube) (string, error) {
-	if dk.IsActiveGateMode(dynatracev1beta1.DataIngestCapability.ShortName) {
+	if dk.IsActiveGateMode(dynatracev1beta1.MetricsIngestCapability.ShortName) {
 		return dataIngestUrlForClusterActiveGate(dk)
 	} else if len(dk.Spec.APIURL) > 0 {
 		return dataIngestUrlForDynatraceActiveGate(dk)
